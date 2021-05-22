@@ -504,6 +504,7 @@ local function loadTexture()
 	iniSetArt("back2Texture");
 	iniSetArt("itemsTexture");
 	iniSetArt("bgSandTexture");
+	iniSetArt("grassTexture");
 end
 
 local function onResize(event)

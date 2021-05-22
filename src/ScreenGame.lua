@@ -22,6 +22,7 @@ function new()
 	local _bArrow = false;
 	local _bGameOver = false;
 	local _character = nil;
+	local _grass = nil
 	local _posChar = 0;
 	local _arrow = nil;
 	local _torch = nil;
@@ -76,17 +77,20 @@ function new()
 		localGroup:removeAllListeners();
 		showGame();
 		_character.isVisible = true;
+		_grass.isVisible = true
 	end
 	
 	local function closeGame()
 		_G.options_pause = false;
 		localGroup:removeAllListeners();
 		_character.isVisible = false;
+		_grass.isVisible = false
 		showMenu();
 	end
 	
 	local function closeOptions()
 		_character.isVisible = true;
+		_grass.isVisible = true
 		if(_wndOptions)then
 			_wndOptions.isVisible = false;
 		end
@@ -112,6 +116,7 @@ function new()
 		_bWindow = true;
 		_G.options_pause = true;
 		_character.isVisible = false;
+		_grass.isVisible = false
 	end
 	
 	local function closeGameOver()
@@ -162,8 +167,9 @@ function new()
 		
 		_bWindow = true;
 		_character.isVisible = false;
+		_grass.isVisible = false
 	end
-	
+
 	local function createBackground()
 		local size = 254*scaleGraphics;
 		local countX = math.ceil(_W/size) + 1;
@@ -225,6 +231,7 @@ function new()
 	
 	local function pauseGame()
 		_character.isVisible = false;
+		_grass.isVisible = false
 		if(options_pause)then
 			closeOptions();
 		else
@@ -309,6 +316,7 @@ function new()
 		_character.xMov = (_character.speed)*cosAngle;
 		_character.yMov = (_character.speed)*sinAngle;
 		_character.isVisible = false;
+		_grass.isVisible = false;
 	end
 	
 	local function addSaw()
@@ -344,6 +352,13 @@ function new()
 		gameOver();
 	end
 	
+	local function createGrass()
+		_grass = addObj("grass")
+		_grass.x = _grass.width / 2 - 150
+		_grass.y = _H - _grass.height / 2 + 50
+	end
+
+
 	local function createSkinCharacter(value)
 		value = tostring(value);
 		_character["skin" .. value] = addObj("character_" .. value);
@@ -472,10 +487,13 @@ function new()
 		createCharacter();
 		--refreshArrow();
 		createButtons();
+		createGrass();
 		
 		_timeTorch = TIME_TORCH + math.ceil(math.random()*5000);
 		_timeSaw = TIME_SAW + math.ceil(math.random()*2000);
+		_grass.isVisible = true
 		_character.isVisible = true;
+		_grass.isVisible = true
 	end
 	
 	init();
@@ -485,6 +503,13 @@ function new()
 			return;
 		end
 		
+		print(greenInspect.inspect(event))
+		if (event.x < _W / 2) then
+			print('left')
+		else
+			print('right')
+		end
+		_character.x = event.x
 --[[
 		local angle = standart.toRadians(_arrow.rotation);
 		local cosAngle = math.cos(angle)*_arrow.xScale;
@@ -699,6 +724,7 @@ function new()
 			gameOver();
 		end
 		_character.isVisible = true;
+		_grass.isVisible = true
 	end
 	
 	local function rotationArrow()
