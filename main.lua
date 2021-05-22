@@ -30,6 +30,8 @@ print("WxH: ".._W.."x".._H)
 -- data user
 login_obj = {}
 
+levels = {}
+
 local platform = system.getInfo( "platform" )
 local env = system.getInfo( "environment" )
  
@@ -49,6 +51,7 @@ greenMsgs = require("framework.greenMsgs").new()
 greenMsgs.x = 20
 greenMsgs.y = 20
 greenMsgs.isVisible = options_debug
+fx = require "com.ponywolf.ponyfx"
 
 -- vars
 fontMain = 'FRADM.TTF' -- 'Franklin Gothic Demi', 'FRADM.TTF'
@@ -137,6 +140,13 @@ function loadData()
 		clearData()
 		-- print("Loading: fail!")
 	end
+end
+
+function loadLevels()
+	-- @TODO - больше 1 уровня - потом
+	levels = {
+		[ 1 ] = require("data.level")
+	}
 end
 
 profiling = require("framework.greenProfiling").new()
@@ -473,16 +483,44 @@ local function iniSetArt( set_name )
 end
 
 local function loadMusic()
-	greenSounds:add_sound( 'musicMainMenu', true )
+	greenSounds:add_sound( "musicMainMenu", true )
 end
 local function loadSounds()
-	greenSounds:add_sound( 'click_approve' )
+	greenSounds:add_sound( "bossfight_song_final" )
+	greenSounds:add_sound( "boss_hit" )
+	greenSounds:add_sound( "click_approve" )
+	greenSounds:add_sound( "drop_pikcup" )
+	greenSounds:add_sound( "electric_trap" )
+	greenSounds:add_sound( "fightvoice" )
+	greenSounds:add_sound( "game_over" )
+	greenSounds:add_sound( "mainlevel_song" )
+	greenSounds:add_sound( "musicMainMenu" )
+	greenSounds:add_sound( "pickup" )
+	greenSounds:add_sound( "player_hit" )
+	greenSounds:add_sound( "seed_pickup" )
+	greenSounds:add_sound( "stone_destroy" )
+	greenSounds:add_sound( "stone_hit" )
+	greenSounds:add_sound( "victory" )
+	greenSounds:add_sound( "wood_destroy" )
+	greenSounds:add_sound( "wood_hit" )
+
 end
 
 local function loadTexture()
-	iniSetArt("itemsTexture")
-	iniSetArt("bgSandTexture")
-	iniSetArt("grassTexture")
+	iniSetArt( "itemsTexture" )
+	iniSetArt( "bgSandTexture" )
+	iniSetArt( "grassTexture" )
+	iniSetArt( "drop" )
+	iniSetArt( "smallStones" )
+	iniSetArt( "bones" )
+	iniSetArt( "seedOrange" )
+	iniSetArt( "seedGreen" )
+	iniSetArt( "skull" )
+	iniSetArt( "seedsBG" )
+	iniSetArt( "water" )
+	iniSetArt( "waterPlank" )
+	iniSetArt( "hp" )
+	iniSetArt( "hpBG" )
 end
 
 local function onResize( event )
@@ -507,6 +545,9 @@ local function main()
 	end )
 	table.insert( loading_steps, function()
 		loadData()
+	end )
+	table.insert( loading_steps, function()
+		loadLevels()
 	end )
 	table.insert( loading_steps, function()
 		musicPlay( "musicMainMenu" )

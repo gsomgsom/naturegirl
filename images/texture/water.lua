@@ -4,26 +4,26 @@ SheetInfo.sheet =
 {
     frames = {
         {
-            -- frass
+            -- water
             x=1,
             y=1,
-            width=572,
-            height=168,
+            width=100,
+            height=10,
             sourceX = 0,
             sourceY = 0,
-            sourceWidth = 572,
-            sourceHeight = 168
+            sourceWidth = 100,
+            sourceHeight = 10
         },
     },
 
-    sheetContentWidth = 572,
-    sheetContentHeight = 168
+    sheetContentWidth = 100,
+    sheetContentHeight = 10
 }
 
 SheetInfo.frameIndex =
 {
 
-    ["grass"] = 1,
+    ["water"] = 1,
 }
 
 function SheetInfo:getSheet()
