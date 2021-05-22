@@ -17,12 +17,12 @@ function new(callRestart, callMenu)
 	bg.yScale = 0.5;
 	localGroup:insert(bg);
 	
-	local tfTitle = createText(getText("game_over"), 40, {128/255,137/255,137/255})
+	local tfTitle = createText("Game Over", 40, {128/255,137/255,137/255})
 	tfTitle.x = 0;
 	tfTitle.y = - 150;
 	localGroup:insert(tfTitle);
 	
-	local tfTitle = createText(getText("your_score"), 30, {195/255,120/255,91/255})
+	local tfTitle = createText("Your score", 30, {195/255,120/255,91/255})
 	tfTitle.x = 0;
 	tfTitle.y = 70;
 	localGroup:insert(tfTitle);

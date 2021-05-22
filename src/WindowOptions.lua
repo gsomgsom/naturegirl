@@ -17,7 +17,7 @@ function new(callRestart, callMenu)
 	bg.yScale = 0.5;
 	localGroup:insert(bg);
 	
-	local tfTitle = createText(getText("options"), 40, {128/255,137/255,137/255})
+	local tfTitle = createText("Options", 40, {128/255,137/255,137/255})
 	tfTitle.x = 0;
 	tfTitle.y = - 150;
 	localGroup:insert(tfTitle);
