@@ -14,12 +14,12 @@ function new()
 	local MAX_PLANTS = 6
 	local BOSS_LIGHTING_TIMER = 3000
 	local PLANT_ATTACK_TIMER = 1000
-	local BOSS_HP = 30
+	local BOSS_HP = 20
 
 	local gameMode = "normal"
 	local cellHeight = ( _W / CELL_DIVIDER ) * 0.5
 	local maxGameGroupY = cellHeight * #levels[ 1 ].data + _H
-	--maxGameGroupY = 2000 -- DEBUG BOSS FIGHT
+	-- maxGameGroupY = 2000 -- DEBUG BOSS FIGHT
 	
 	local _drops = {}
 	local _blocks = {}
@@ -217,7 +217,7 @@ function new()
 	tfBossHP.x = _W - (bgBossPlank.width * bgBossPlank.xScale / 2 + 10*scaleGraphics)
 	tfBossHP.y = 300*scaleGraphics
 	faceGroup:insert(tfBossHP)
-	
+
 
 	local bgSeedsOrangeBG = addObj("seedsBG")
 	bgSeedsOrangeBG.xScale = 0.7*scaleGraphics
@@ -298,6 +298,9 @@ function new()
 			updateScore( 100 ) -- fake score
 			updateSeedsOrange( 10 ) -- fake seeds
 			updateSeedsGreen( 10 ) -- fake seeds
+			bgBossPlank.isVisible = true
+			bgBossHP.isVisible = true
+			tfBossHP.isVisible = true
 			if _plantsLeft > 0 then
 				btnGrow.isVisible = true
 			end
@@ -753,6 +756,9 @@ function new()
 		_grass.isVisible = true
 		_character.isVisible = true
 		_grass.isVisible = true
+		bgBossPlank.isVisible = false
+		bgBossHP.isVisible = false
+		tfBossHP.isVisible = false
 	end
 	
 	init()
@@ -1064,7 +1070,7 @@ function new()
 							if _bossHP <= 0 then
 								soundPlay("victory")
 								gameOver()
-								showVictory()
+								showGameOver()
 							end
 						end } )
 

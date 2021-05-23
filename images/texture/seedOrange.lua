@@ -7,17 +7,17 @@ SheetInfo.sheet =
             -- seedOrange
             x=1,
             y=1,
-            width=70,
-            height=42,
-            sourceX = 0,
-            sourceY = 0,
-            sourceWidth = 70,
-            sourceHeight = 42
+            width=671,
+            height=462,
+            sourceX = 671,
+            sourceY = 462,
+            sourceWidth = 671,
+            sourceHeight = 462
         },
     },
 
-    sheetContentWidth = 70,
-    sheetContentHeight = 42
+    sheetContentWidth = 671,
+    sheetContentHeight = 462
 }
 
 SheetInfo.frameIndex =
