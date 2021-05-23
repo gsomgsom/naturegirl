@@ -31,6 +31,7 @@ function new()
 	local _posChar = 0
 	local _wndOptions = nil
 	local _wndGameOver = nil
+	local _wndVictory = nil
 	local _oldTime = getTimer()
 	local _timeGame = 0
 	local _countTileY = 0
@@ -261,6 +262,14 @@ function new()
 		_closeTime = 100
 	end
 	
+	local function closeVictory()
+		if(_wndVictory)then
+			_wndVictory.isVisible = false
+		end
+		_G.options_pause = false
+		_closeTime = 100
+	end
+	
 	local function refreshSkinCharacter(value)
 		--[[
 		value = tostring(value)
@@ -298,6 +307,38 @@ function new()
 		_wndGameOver.isVisible = true
 		_wndGameOver.x = _W/2
 		_wndGameOver.y = _H/2
+		
+		saveData()
+		
+		_bWindow = true
+		_character.isVisible = false
+		_grass.isVisible = false
+	end
+
+	local function showVictory()
+		if(_wndVictory and _wndVictory.isVisible)then
+			return
+		end
+		if(_bWindow)then
+			closeOptions()
+		end
+		
+		setItemCount("score", _score)
+		if(_score> getItemCount("scoreRecord"))then
+			setItemCount("scoreRecord", _score)
+		end
+		addItemCount("countDeath", 1)
+		
+		if(_wndVictory == nil)then
+			_wndVictory = require("src.WindowVictory").new(restartGame, closeGame)
+			_wndVictory.xScale = minScale*mobileScale
+			_wndVictory.yScale = _wndVictory.xScale
+			faceGroup:insert(_wndVictory)
+		end
+		
+		_wndVictory.isVisible = true
+		_wndVictory.x = _W/2
+		_wndVictory.y = _H/2
 		
 		saveData()
 		
@@ -706,7 +747,6 @@ function new()
 					updateSeedsGreen( _seedsGreen + 1 )
 					-- fx.screenFlash( { 0, 1, 0 } )
 					gameGroup[ i ].isVisible = false
-					-- @TODO:green seed +1
 				end
 			end
 		end
@@ -740,8 +780,10 @@ function new()
 ]]--
 
 		if gameGroup.y > ( _W / CELL_DIVIDER ) * #levels[ 1 ].data + _H then
+			pauseGame()
 			soundPlay("victory")
 			gameOver()
+			showVictory()
 		end
 		
 		updateTiles()
