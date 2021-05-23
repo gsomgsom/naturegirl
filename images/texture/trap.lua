@@ -7,17 +7,17 @@ SheetInfo.sheet =
             -- trap
             x=1,
             y=1,
-            width=296,
-            height=200,
+            width=200,
+            height=191,
             sourceX = 0,
             sourceY = 0,
-            sourceWidth = 296,
-            sourceHeight = 200
+            sourceWidth = 200,
+            sourceHeight = 191
         },
     },
 
-    sheetContentWidth = 296,
-    sheetContentHeight = 200
+    sheetContentWidth = 200,
+    sheetContentHeight = 191
 }
 
 SheetInfo.frameIndex =

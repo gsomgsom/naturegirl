@@ -13,23 +13,26 @@ function new()
 	localGroup:insert(backGroup);
 	localGroup:insert(faceGroup);
 	
-	local bg = display.newImage("images/back/bgMenu.jpg");
+	local bg = display.newImage("images/back/bgMenu.png");
 	bg.xScale = maxScale;
 	bg.yScale = maxScale;
 	bg.x = _W/2;
 	bg.y = _H/2;
 	backGroup:insert(bg);
+
+--[[
 	local logo = display.newImage("images/back/logoGame.png");
 	logo.xScale = scaleGraphics;
 	logo.yScale = scaleGraphics;
 	logo.x = _W/2;
 	logo.y = 350*scaleGraphics;
 	backGroup:insert(logo);
+]]--
 	
 	local btnStart = addButtonTexture("btnPlay");
-	scaleObjects(btnStart, 0.75*scaleGraphics);
+	scaleObjects(btnStart, 0.6*scaleGraphics);
 	btnStart.x = _W/2;
-	btnStart.y = _H - 300*scaleGraphics;
+	btnStart.y = _H - 180*scaleGraphics
 	faceGroup:insert(btnStart)
 	table.insert(arButtons, btnStart);
 	

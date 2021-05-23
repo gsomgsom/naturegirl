@@ -4,26 +4,26 @@ SheetInfo.sheet =
 {
     frames = {
         {
-            -- skull
+            -- flowerYellow
             x=1,
             y=1,
-            width=152,
-            height=105,
+            width=726,
+            height=1060,
             sourceX = 0,
             sourceY = 0,
-            sourceWidth = 152,
-            sourceHeight = 105
+            sourceWidth = 725,
+            sourceHeight = 1060
         },
     },
 
-    sheetContentWidth = 152,
-    sheetContentHeight = 105
+    sheetContentWidth = 725,
+    sheetContentHeight = 1060
 }
 
 SheetInfo.frameIndex =
 {
 
-    ["skull"] = 1,
+    ["flowerYellow"] = 1,
 }
 
 function SheetInfo:getSheet()

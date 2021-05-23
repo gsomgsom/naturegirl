@@ -503,11 +503,13 @@ local function loadSounds()
 	greenSounds:add_sound( "victory" )
 	greenSounds:add_sound( "wood_destroy" )
 	greenSounds:add_sound( "wood_hit" )
+	greenSounds:add_sound( "pwwt" )
+	greenSounds:add_sound( "squash" )
 
 end
 
 local function loadTexture()
-	iniSetArt( "itemsTexture" )
+	iniSetArt( "ui" )
 	iniSetArt( "bgSandTexture" )
 	iniSetArt( "grassTexture" )
 	iniSetArt( "drop" )
@@ -522,6 +524,8 @@ local function loadTexture()
 	iniSetArt( "hp" )
 	iniSetArt( "hpBG" )
 	iniSetArt( "trap" )
+	iniSetArt( "lightning" )
+	iniSetArt( "flowerYellow" )
 end
 
 local function onResize( event )

@@ -42,28 +42,28 @@ function new(callRestart, callMenu)
 	
 	local function createButtons()
 		local scale = 0.35;
-		local btnRestart = addButtonTexture("btnRestart");
-		scaleObjects(btnRestart, scale)
-		btnRestart.x = -130;
-		btnRestart.y = -40;
-		localGroup:insert(btnRestart)
-		table.insert(_arButtons, btnRestart);
+		local btnRetry = addButtonTexture("btnRetry");
+		scaleObjects(btnRetry, scale)
+		btnRetry.x = -130;
+		btnRetry.y = -40;
+		localGroup:insert(btnRetry)
+		table.insert(_arButtons, btnRetry);
 		btnSoundOff = addButtonTexture("btnSoundOff");
 		scaleObjects(btnSoundOff, scale)
 		btnSoundOff.x = 0;
-		btnSoundOff.y = btnRestart.y;
+		btnSoundOff.y = btnRetry.y;
 		localGroup:insert(btnSoundOff)
 		table.insert(_arButtons, btnSoundOff);
 		btnSound = addButtonTexture("btnSound");
 		scaleObjects(btnSound, scale)
 		btnSound.x = 0;
-		btnSound.y = btnRestart.y;
+		btnSound.y = btnRetry.y;
 		localGroup:insert(btnSound)
 		table.insert(_arButtons, btnSound);
 		local btnMenu = addButtonTexture("btnMenu");
 		scaleObjects(btnMenu, scale)
 		btnMenu.x = 130;
-		btnMenu.y = btnRestart.y;
+		btnMenu.y = btnRetry.y;
 		localGroup:insert(btnMenu)
 		table.insert(_arButtons, btnMenu);
 		
@@ -137,7 +137,7 @@ function new(callRestart, callMenu)
 						item_mc:onRelease();
 						soundPlay("click_approve");
 						return true;
-					elseif(item_mc.act == "btnRestart")then
+					elseif(item_mc.act == "btnRetry")then
 						soundPlay("click_approve");
 						callRestart();
 						return true;
