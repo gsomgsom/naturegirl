@@ -526,6 +526,8 @@ local function loadTexture()
 	iniSetArt( "trap" )
 	iniSetArt( "lightning" )
 	iniSetArt( "flowerYellow" )
+	iniSetArt( "bullet" )
+	iniSetArt( "bossHP" )
 end
 
 local function onResize( event )

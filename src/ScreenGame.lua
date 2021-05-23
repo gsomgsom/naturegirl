@@ -13,11 +13,13 @@ function new()
 	local CELL_DIVIDER = 5
 	local MAX_PLANTS = 6
 	local BOSS_LIGHTING_TIMER = 3000
+	local PLANT_ATTACK_TIMER = 1000
+	local BOSS_HP = 30
 
 	local gameMode = "normal"
 	local cellHeight = ( _W / CELL_DIVIDER ) * 0.5
 	local maxGameGroupY = cellHeight * #levels[ 1 ].data + _H
-	maxGameGroupY = 2000 -- DEBUG BOSS FIGHT
+	--maxGameGroupY = 2000 -- DEBUG BOSS FIGHT
 	
 	local _drops = {}
 	local _blocks = {}
@@ -29,6 +31,8 @@ function new()
 	local _plantsLeft = 0
 	local _lightning = nil
 	local _hit_by_lightning = false
+	local _shootingPlant = 1
+	local _bossHP = 0
 
 	local _arButtons = {}
 	local _arTiles = {}
@@ -173,13 +177,13 @@ function new()
 	bgWaterPlank.xScale = 0.50*scaleGraphics
 	bgWaterPlank.yScale = bgWaterPlank.xScale
 	bgWaterPlank.x = bgWaterPlank.width * bgWaterPlank.xScale / 2 
-	bgWaterPlank.y = 250*scaleGraphics 
+	bgWaterPlank.y = 300*scaleGraphics 
 
 	local bgWater = addObj("water")
 	bgWater.anchorX = 0
 	bgWater.xScale = 0.49*scaleGraphics
 	bgWater.yScale = bgWater.xScale
-	bgWater.x = bgWaterPlank.x - bgWaterPlank.width * bgWaterPlank.xScale / 2 + 10
+	bgWater.x = bgWaterPlank.x - bgWaterPlank.width * bgWaterPlank.xScale / 2 + 10*scaleGraphics
 	bgWater.y = bgWaterPlank.y
 	bgWater.width = 0
 	bgWater.height = bgWaterPlank.height
@@ -188,8 +192,31 @@ function new()
 	
 	local tfScore = createText(_score, 80*scaleGraphics, {0/255,120/255,200/255})
 	tfScore.x = bgWaterPlank.width * bgWaterPlank.xScale / 2 
-	tfScore.y = 250*scaleGraphics
+	tfScore.y = 300*scaleGraphics
 	faceGroup:insert(tfScore)
+
+
+	local bgBossPlank = addObj("waterPlank")
+	bgBossPlank.xScale = 0.50*scaleGraphics
+	bgBossPlank.yScale = bgBossPlank.xScale
+	bgBossPlank.x = _W - bgBossPlank.width * bgBossPlank.xScale / 2 
+	bgBossPlank.y = 300*scaleGraphics 
+
+	local bgBossHP = addObj("bossHP")
+	bgBossHP.anchorX = 0
+	bgBossHP.xScale = 0.49*scaleGraphics
+	bgBossHP.yScale = bgBossHP.xScale
+	bgBossHP.x = bgBossPlank.x - bgBossPlank.width * bgBossPlank.xScale / 2
+	bgBossHP.y = bgBossPlank.y
+	bgBossHP.width = 0
+	bgBossHP.height = bgBossPlank.height
+	faceGroup:insert(bgBossHP)
+	faceGroup:insert(bgBossPlank)
+	
+	local tfBossHP = createText(_score, 80*scaleGraphics, {0/255,120/255,200/255})
+	tfBossHP.x = _W - (bgBossPlank.width * bgBossPlank.xScale / 2 + 10*scaleGraphics)
+	tfBossHP.y = 300*scaleGraphics
+	faceGroup:insert(tfBossHP)
 	
 
 	local bgSeedsOrangeBG = addObj("seedsBG")
@@ -222,6 +249,12 @@ function new()
 		_score = newScore
 		tfScore.text = tostring( _score )
 		bgWater.width = math.min( _score / 100 * bgWaterPlank.width, bgWaterPlank.width )
+	end
+
+	local function updateBossHP( value )
+		_bossHP = value
+		tfBossHP.text = tostring( value )
+		bgBossHP.width = math.min( _bossHP / BOSS_HP * bgBossPlank.width, bgBossPlank.width )
 	end
 
 	local function updateHP( newHP )
@@ -291,12 +324,6 @@ function new()
 			musicStop()
 			musicPlay( "musicGameLevel" )
 		end
---[[
-		pauseGame()
-		soundPlay("victory")
-		gameOver()
-		showVictory()
-]]--
 	end
 	
 	local function restartGame()
@@ -433,12 +460,6 @@ function new()
 			closeOptions()
 		end
 		
-		setItemCount("score", _score)
-		if(_score> getItemCount("scoreRecord"))then
-			setItemCount("scoreRecord", _score)
-		end
-		addItemCount("countDeath", 1)
-		
 		if(_wndVictory == nil)then
 			_wndVictory = require("src.WindowVictory").new(restartGame, closeGame)
 			_wndVictory.xScale = minScale*mobileScale
@@ -454,7 +475,13 @@ function new()
 		
 		_bWindow = true
 		_character.isVisible = false
+		_boss.isVisible = false
 		_grass.isVisible = false
+		if #_plants > 0 then
+			for i = 1, #_plants do
+				_plants[ i ].isVisible = false
+			end
+		end
 	end
 
 	local function createBackground()
@@ -599,7 +626,13 @@ function new()
 		_character.xMov = (_character.speed)*cosAngle
 		_character.yMov = (_character.speed)*sinAngle
 		_character.isVisible = false
+		_boss.isVisible = false
 		_grass.isVisible = false
+		if #_plants > 0 then
+			for i = 1, #_plants do
+				_plants[ i ].isVisible = false
+			end
+		end
 	end
 	
 	local function createGrass()
@@ -711,6 +744,7 @@ function new()
 		
 		updateScore( 0 )
 		updateHP( HP )
+		updateBossHP( BOSS_HP )
 		updateSeedsOrange( 0 )
 		updateSeedsGreen( 0 )
 
@@ -976,6 +1010,17 @@ function new()
 		return newLightning
 	end
 
+	local function createPlantBullet( x, y )
+		local newBullet = addObj("bullet")
+		newBullet.xScale = 3*scaleGraphics
+		newBullet.yScale = newBullet.xScale
+		newBullet.x = x
+		newBullet.y = y
+		newBullet.w = newBullet.width*newBullet.xScale
+		newBullet.h = newBullet.height*newBullet.yScale
+		return newBullet
+	end
+
 	-- very fake seeds grow
 	local function spawnPlant()
 		if gameMode == "bossFight" and _plantsLeft > 0 then
@@ -987,13 +1032,14 @@ function new()
 			else
 				updateScore( _score - 10 )
 				updateSeedsGreen( _seedsGreen - 1 )
-				table.insert( _plants, createPlantObject( "flowerYellow" ) ) -- @TODO green
+				table.insert( _plants, createPlantObject( "flowerGreen" ) )
 			end
 		
 			if _plantsLeft <= 0 then
 				soundPlay( "fightvoice" )
 				_boss:setSequence( "fight" )
 				_boss:play()
+
 				timer.performWithDelay( BOSS_LIGHTING_TIMER, function()
 					if not _bGameOver and gameMode == "bossFight" and _plantsLeft == 0 and not options_pause then
 						_hit_by_lightning = false
@@ -1006,6 +1052,30 @@ function new()
 						end } )
 					end
 				end, 0 )
+
+				timer.performWithDelay( PLANT_ATTACK_TIMER, function()
+					if not _bGameOver and gameMode == "bossFight" and _plantsLeft == 0 and not options_pause then
+						soundPlay( "squash" )
+						_plantBullet = createPlantBullet( _plants[ _shootingPlant ].x, _plants[ _shootingPlant ].y )
+						transition.to( _plantBullet, { time = 500, x = _boss.x, y = _boss.y, onComplete = function( obj )
+							obj:removeSelf()
+							soundPlay( "boss_hit" )
+							updateBossHP( _bossHP - 1 )
+							if _bossHP <= 0 then
+								soundPlay("victory")
+								gameOver()
+								showVictory()
+							end
+						end } )
+
+						_shootingPlant = _shootingPlant + 1
+						if _shootingPlant > #_plants then
+							_shootingPlant = 1
+						end
+
+					end
+				end, 0 )
+
 				btnGrow.isVisible = false
 			end
 		end
