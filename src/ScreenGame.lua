@@ -64,95 +64,95 @@ function new()
 	local bgHP1 = addObj("hpBG")
 	bgHP1.xScale = scaleGraphics
 	bgHP1.yScale = bgHP1.xScale
-	bgHP1.x = 50
+	bgHP1.x = 50*scaleGraphics
 	bgHP1.y = 120*scaleGraphics 
-	bgHP1.width = 100
-	bgHP1.height = 100
+	bgHP1.width = 100*scaleGraphics
+	bgHP1.height = 100*scaleGraphics
 	faceGroup:insert(bgHP1)
 	
 	local bgHP2 = addObj("hpBG")
 	bgHP2.xScale = scaleGraphics
 	bgHP2.yScale = bgHP2.xScale
-	bgHP2.x = 50 + 105 * 1
+	bgHP2.x = 50*scaleGraphics + 105 * 1*scaleGraphics
 	bgHP2.y = 120*scaleGraphics 
-	bgHP2.width = 100
-	bgHP2.height = 100
+	bgHP2.width = 100*scaleGraphics
+	bgHP2.height = 100*scaleGraphics
 	faceGroup:insert(bgHP2)
 
 	local bgHP3 = addObj("hpBG")
 	bgHP3.xScale = scaleGraphics
 	bgHP3.yScale = bgHP1.xScale
-	bgHP3.x = 50 + 105 * 2
+	bgHP3.x = 50*scaleGraphics + 105 * 2*scaleGraphics
 	bgHP3.y = 120*scaleGraphics 
-	bgHP3.width = 100
-	bgHP3.height = 100
+	bgHP3.width = 100*scaleGraphics
+	bgHP3.height = 100*scaleGraphics
 	faceGroup:insert(bgHP3)
 
 	local bgHP4 = addObj("hpBG")
 	bgHP4.xScale = scaleGraphics
 	bgHP4.yScale = bgHP4.xScale
-	bgHP4.x = 50 + 105 * 3
+	bgHP4.x = 50*scaleGraphics + 105 * 3*scaleGraphics
 	bgHP4.y = 120*scaleGraphics 
-	bgHP4.width = 100
-	bgHP4.height = 100
+	bgHP4.width = 100*scaleGraphics
+	bgHP4.height = 100*scaleGraphics
 	faceGroup:insert(bgHP4)
 
 	local bgHP5 = addObj("hpBG")
 	bgHP5.xScale = scaleGraphics
 	bgHP5.yScale = bgHP5.xScale
-	bgHP5.x = 50 + 105 * 4
+	bgHP5.x = 50*scaleGraphics + 105 * 4*scaleGraphics
 	bgHP5.y = 120*scaleGraphics 
-	bgHP5.width = 100
-	bgHP5.height = 100
+	bgHP5.width = 100*scaleGraphics
+	bgHP5.height = 100*scaleGraphics
 	faceGroup:insert(bgHP5)
 
 	local hp1 = addObj("hp")
 	hp1.xScale = scaleGraphics
 	hp1.yScale = bgHP1.xScale
-	hp1.x = 51
+	hp1.x = 51*scaleGraphics
 	hp1.y = 123*scaleGraphics 
-	hp1.width = 80
-	hp1.height = 80
+	hp1.width = 80*scaleGraphics
+	hp1.height = 80*scaleGraphics
 	hp1.isVisible = false
 	faceGroup:insert(hp1)
 
 	local hp2 = addObj("hp")
 	hp2.xScale = scaleGraphics
 	hp2.yScale = bgHP2.xScale
-	hp2.x = 51 + 105 * 1
+	hp2.x = 51*scaleGraphics + 105 * 1*scaleGraphics
 	hp2.y = 123*scaleGraphics 
-	hp2.width = 80
-	hp2.height = 80
+	hp2.width = 80*scaleGraphics
+	hp2.height = 80*scaleGraphics
 	hp2.isVisible = false
 	faceGroup:insert(hp2)
 
 	local hp3 = addObj("hp")
 	hp3.xScale = scaleGraphics
 	hp3.yScale = bgHP3.xScale
-	hp3.x = 51 + 105 * 2
+	hp3.x = 51*scaleGraphics + 105 * 2*scaleGraphics
 	hp3.y = 123*scaleGraphics 
-	hp3.width = 80
-	hp3.height = 80
+	hp3.width = 80*scaleGraphics
+	hp3.height = 80*scaleGraphics
 	hp3.isVisible = false
 	faceGroup:insert(hp3)
 
 	local hp4 = addObj("hp")
 	hp4.xScale = scaleGraphics
 	hp4.yScale = bgHP4.xScale
-	hp4.x = 51 + 105 * 3
+	hp4.x = 51*scaleGraphics + 105 * 3*scaleGraphics
 	hp4.y = 123*scaleGraphics 
-	hp4.width = 80
-	hp4.height = 80
+	hp4.width = 80*scaleGraphics
+	hp4.height = 80*scaleGraphics
 	hp4.isVisible = false
 	faceGroup:insert(hp4)
 
 	local hp5 = addObj("hp")
 	hp5.xScale = scaleGraphics
 	hp5.yScale = bgHP5.xScale
-	hp5.x = 51 + 105 * 4
+	hp5.x = 51*scaleGraphics + 105 * 4*scaleGraphics
 	hp5.y = 123*scaleGraphics 
-	hp5.width = 80
-	hp5.height = 80
+	hp5.width = 80*scaleGraphics
+	hp5.height = 80*scaleGraphics
 	hp5.isVisible = false
 	faceGroup:insert(hp5)
 
@@ -386,8 +386,8 @@ function new()
 			for c = 1, CELL_DIVIDER do
 				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 1 then
 					local drop = addObj( "drop" )
-					drop.xScale = 1.2
-					drop.yScale = 1.2
+					drop.xScale = 1.2*scaleGraphics
+					drop.yScale = 1.2*scaleGraphics
 					drop.w = drop.width * drop.xScale
 					drop.h = drop.height * drop.yScale
 					drop.x = ( _W / CELL_DIVIDER ) * ( c - 1 ) + ( ( _W / CELL_DIVIDER ) / 2 )
@@ -397,8 +397,8 @@ function new()
 				end
 				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 2 then
 					local stone = addObj( "smallStones" )
-					stone.xScale = 1.2
-					stone.yScale = 1.2
+					stone.xScale = 1.2*scaleGraphics
+					stone.yScale = 1.2*scaleGraphics
 					stone.w = stone.width * stone.xScale
 					stone.h = stone.height * stone.yScale
 					stone.x = ( _W / CELL_DIVIDER ) * ( c - 1 ) + ( ( _W / CELL_DIVIDER ) / 2 )
@@ -408,8 +408,8 @@ function new()
 				end
 				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 3 then
 					local bones = addObj( "bones" )
-					bones.xScale = 1.2
-					bones.yScale = 1.2
+					bones.xScale = 1.2*scaleGraphics
+					bones.yScale = 1.2*scaleGraphics
 					bones.w = bones.width * bones.xScale
 					bones.h = bones.height * bones.yScale
 					bones.x = ( _W / CELL_DIVIDER ) * ( c - 1 ) + ( ( _W / CELL_DIVIDER ) / 2 )
@@ -419,8 +419,8 @@ function new()
 				end
 				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 4 then
 					local seedOrange = addObj( "seedOrange" )
-					seedOrange.xScale = 1.2
-					seedOrange.yScale = 1.2
+					seedOrange.xScale = 1.2*scaleGraphics
+					seedOrange.yScale = 1.2*scaleGraphics
 					seedOrange.w = seedOrange.width * seedOrange.xScale
 					seedOrange.h = seedOrange.height * seedOrange.yScale
 					seedOrange.x = ( _W / CELL_DIVIDER ) * ( c - 1 ) + ( ( _W / CELL_DIVIDER ) / 2 )
@@ -430,8 +430,8 @@ function new()
 				end
 				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 5 then
 					local seedGreen = addObj( "seedGreen" )
-					seedGreen.xScale = 1.2
-					seedGreen.yScale = 1.2
+					seedGreen.xScale = 1.2*scaleGraphics
+					seedGreen.yScale = 1.2*scaleGraphics
 					seedGreen.w = seedGreen.width * seedGreen.xScale
 					seedGreen.h = seedGreen.height * seedGreen.yScale
 					seedGreen.x = ( _W / CELL_DIVIDER ) * ( c - 1 ) + ( ( _W / CELL_DIVIDER ) / 2 )
@@ -441,8 +441,8 @@ function new()
 				end
 				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 6 then
 					local trap = addObj( "skull" )
-					trap.xScale = 1.2
-					trap.yScale = 1.2
+					trap.xScale = 1.2*scaleGraphics
+					trap.yScale = 1.2*scaleGraphics
 					trap.w = trap.width * trap.xScale
 					trap.h = trap.height * trap.yScale
 					trap.x = ( _W / CELL_DIVIDER ) * ( c - 1 ) + ( ( _W / CELL_DIVIDER ) / 2 )
@@ -494,8 +494,10 @@ function new()
 	
 	local function createGrass()
 		_grass = addObj("grass")
+		_grass.xScale = 2*scaleGraphics
+		_grass.yScale = _grass.xScale
 		_grass.x = _W / 2
-		_grass.y = _H - _grass.height / 2
+		_grass.y = _H - _grass.height*scaleGraphics / 2
 	end
 
 
