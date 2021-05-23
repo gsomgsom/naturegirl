@@ -1,6 +1,8 @@
 module(..., package.seeall)
 
 function new()
+	musicStop()
+	musicPlay( "musicGameLevel" )
 	local localGroup = display.newGroup()
 	local backGroup = display.newGroup()
 	local gameGroup = display.newGroup()
@@ -109,50 +111,50 @@ function new()
 	local hp1 = addObj("hp")
 	hp1.xScale = scaleGraphics
 	hp1.yScale = bgHP1.xScale
-	hp1.x = 51*scaleGraphics
-	hp1.y = 123*scaleGraphics 
-	hp1.width = 80*scaleGraphics
-	hp1.height = 80*scaleGraphics
+	hp1.x = 50*scaleGraphics
+	hp1.y = 120*scaleGraphics 
+	hp1.width = 100*scaleGraphics
+	hp1.height = 100*scaleGraphics
 	hp1.isVisible = false
 	faceGroup:insert(hp1)
 
 	local hp2 = addObj("hp")
 	hp2.xScale = scaleGraphics
 	hp2.yScale = bgHP2.xScale
-	hp2.x = 51*scaleGraphics + 105 * 1*scaleGraphics
-	hp2.y = 123*scaleGraphics 
-	hp2.width = 80*scaleGraphics
-	hp2.height = 80*scaleGraphics
+	hp2.x = 50*scaleGraphics + 105 * 1*scaleGraphics
+	hp2.y = 120*scaleGraphics 
+	hp2.width = 100*scaleGraphics
+	hp2.height = 100*scaleGraphics
 	hp2.isVisible = false
 	faceGroup:insert(hp2)
 
 	local hp3 = addObj("hp")
 	hp3.xScale = scaleGraphics
 	hp3.yScale = bgHP3.xScale
-	hp3.x = 51*scaleGraphics + 105 * 2*scaleGraphics
-	hp3.y = 123*scaleGraphics 
-	hp3.width = 80*scaleGraphics
-	hp3.height = 80*scaleGraphics
+	hp3.x = 50*scaleGraphics + 105 * 2*scaleGraphics
+	hp3.y = 120*scaleGraphics 
+	hp3.width = 100*scaleGraphics
+	hp3.height = 100*scaleGraphics
 	hp3.isVisible = false
 	faceGroup:insert(hp3)
 
 	local hp4 = addObj("hp")
 	hp4.xScale = scaleGraphics
 	hp4.yScale = bgHP4.xScale
-	hp4.x = 51*scaleGraphics + 105 * 3*scaleGraphics
-	hp4.y = 123*scaleGraphics 
-	hp4.width = 80*scaleGraphics
-	hp4.height = 80*scaleGraphics
+	hp4.x = 50*scaleGraphics + 105 * 3*scaleGraphics
+	hp4.y = 120*scaleGraphics 
+	hp4.width = 100*scaleGraphics
+	hp4.height = 100*scaleGraphics
 	hp4.isVisible = false
 	faceGroup:insert(hp4)
 
 	local hp5 = addObj("hp")
 	hp5.xScale = scaleGraphics
 	hp5.yScale = bgHP5.xScale
-	hp5.x = 51*scaleGraphics + 105 * 4*scaleGraphics
-	hp5.y = 123*scaleGraphics 
-	hp5.width = 80*scaleGraphics
-	hp5.height = 80*scaleGraphics
+	hp5.x = 50*scaleGraphics + 105 * 4*scaleGraphics
+	hp5.y = 120*scaleGraphics 
+	hp5.width = 100*scaleGraphics
+	hp5.height = 100*scaleGraphics
 	hp5.isVisible = false
 	faceGroup:insert(hp5)
 
@@ -220,6 +222,7 @@ function new()
 		localGroup:removeAllListeners()
 		_character.isVisible = false
 		_grass.isVisible = false
+		_grass:removeSelf()
 		showMenu()
 	end
 	
@@ -386,8 +389,8 @@ function new()
 			for c = 1, CELL_DIVIDER do
 				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 1 then
 					local drop = addObj( "drop" )
-					drop.xScale = 1.2*scaleGraphics
-					drop.yScale = 1.2*scaleGraphics
+					drop.xScale = 0.5*scaleGraphics
+					drop.yScale = 0.5*scaleGraphics
 					drop.w = drop.width * drop.xScale
 					drop.h = drop.height * drop.yScale
 					drop.x = ( _W / CELL_DIVIDER ) * ( c - 1 ) + ( ( _W / CELL_DIVIDER ) / 2 )
@@ -407,7 +410,7 @@ function new()
 					table.insert(_blocks, gameGroup.numChildren)
 				end
 				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 3 then
-					local bones = addObj( "bones" )
+					local bones = addObj( "skull" )
 					bones.xScale = 1.2*scaleGraphics
 					bones.yScale = 1.2*scaleGraphics
 					bones.w = bones.width * bones.xScale
@@ -419,8 +422,8 @@ function new()
 				end
 				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 4 then
 					local seedOrange = addObj( "seedOrange" )
-					seedOrange.xScale = 1.2*scaleGraphics
-					seedOrange.yScale = 1.2*scaleGraphics
+					seedOrange.xScale = 1.5*scaleGraphics
+					seedOrange.yScale = 1.5*scaleGraphics
 					seedOrange.w = seedOrange.width * seedOrange.xScale
 					seedOrange.h = seedOrange.height * seedOrange.yScale
 					seedOrange.x = ( _W / CELL_DIVIDER ) * ( c - 1 ) + ( ( _W / CELL_DIVIDER ) / 2 )
@@ -430,8 +433,8 @@ function new()
 				end
 				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 5 then
 					local seedGreen = addObj( "seedGreen" )
-					seedGreen.xScale = 1.2*scaleGraphics
-					seedGreen.yScale = 1.2*scaleGraphics
+					seedGreen.xScale = 1.5*scaleGraphics
+					seedGreen.yScale = 1.5*scaleGraphics
 					seedGreen.w = seedGreen.width * seedGreen.xScale
 					seedGreen.h = seedGreen.height * seedGreen.yScale
 					seedGreen.x = ( _W / CELL_DIVIDER ) * ( c - 1 ) + ( ( _W / CELL_DIVIDER ) / 2 )
@@ -440,9 +443,9 @@ function new()
 					table.insert(_seedsGreenObj, gameGroup.numChildren)
 				end
 				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 6 then
-					local trap = addObj( "skull" )
-					trap.xScale = 1.2*scaleGraphics
-					trap.yScale = 1.2*scaleGraphics
+					local trap = addObj( "trap" )
+					trap.xScale = 1*scaleGraphics
+					trap.yScale = 1*scaleGraphics
 					trap.w = trap.width * trap.xScale
 					trap.h = trap.height * trap.yScale
 					trap.x = ( _W / CELL_DIVIDER ) * ( c - 1 ) + ( ( _W / CELL_DIVIDER ) / 2 )
@@ -494,7 +497,7 @@ function new()
 	
 	local function createGrass()
 		_grass = addObj("grass")
-		_grass.xScale = 2*scaleGraphics
+		_grass.xScale = 1*maxScale
 		_grass.yScale = _grass.xScale
 		_grass.x = _W / 2
 		_grass.y = _H - _grass.height*scaleGraphics / 2

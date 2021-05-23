@@ -7,17 +7,17 @@ SheetInfo.sheet =
             -- frass
             x=1,
             y=1,
-            width=572,
-            height=168,
+            width=1080,
+            height=200,
             sourceX = 0,
             sourceY = 0,
-            sourceWidth = 572,
-            sourceHeight = 168
+            sourceWidth = 1080,
+            sourceHeight = 200
         },
     },
 
-    sheetContentWidth = 572,
-    sheetContentHeight = 168
+    sheetContentWidth = 1080,
+    sheetContentHeight = 200
 }
 
 SheetInfo.frameIndex =

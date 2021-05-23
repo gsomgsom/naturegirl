@@ -7,17 +7,17 @@ SheetInfo.sheet =
             -- drop
             x=1,
             y=1,
-            width=70,
-            height=110,
+            width=171,
+            height=300,
             sourceX = 0,
             sourceY = 0,
-            sourceWidth = 70,
-            sourceHeight = 110
+            sourceWidth = 171,
+            sourceHeight = 300
         },
     },
 
-    sheetContentWidth = 70,
-    sheetContentHeight = 110
+    sheetContentWidth = 171,
+    sheetContentHeight = 300
 }
 
 SheetInfo.frameIndex =

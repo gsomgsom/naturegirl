@@ -1,6 +1,8 @@
 module(..., package.seeall);
 
 function new()
+	musicStop()
+	musicPlay( "musicMainMenu" )
 	local localGroup = display.newGroup();
 	local backGroup = display.newGroup();
 	local faceGroup = display.newGroup();

@@ -4,26 +4,26 @@ SheetInfo.sheet =
 {
     frames = {
         {
-            -- hp
+            -- trap
             x=1,
             y=1,
-            width=94,
-            height=95,
+            width=296,
+            height=200,
             sourceX = 0,
             sourceY = 0,
-            sourceWidth = 94,
-            sourceHeight = 95
+            sourceWidth = 296,
+            sourceHeight = 200
         },
     },
 
-    sheetContentWidth = 94,
-    sheetContentHeight = 95
+    sheetContentWidth = 296,
+    sheetContentHeight = 200
 }
 
 SheetInfo.frameIndex =
 {
 
-    ["hp"] = 1,
+    ["trap"] = 1,
 }
 
 function SheetInfo:getSheet()
