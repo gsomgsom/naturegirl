@@ -17,7 +17,11 @@ function new(callRestart, callMenu)
 	bg.yScale = 0.5;
 	localGroup:insert(bg);
 	
-	local tfTitle = createText("Game Over", 40, {128/255,137/255,137/255})
+	local titleText = "Game Over"
+	if gameOverVictory then
+		titleText = "Victory!"
+	end
+	local tfTitle = createText(titleText, 40, {128/255,137/255,137/255})
 	tfTitle.x = 0;
 	tfTitle.y = - 150;
 	localGroup:insert(tfTitle);
@@ -62,6 +66,14 @@ function new(callRestart, callMenu)
 		btnMenu.y = btnRetry.y;
 		localGroup:insert(btnMenu)
 		table.insert(_arButtons, btnMenu);
+		if firstLevelPassed then
+			local btnHardmode = addButtonTexture("btnHardmode");
+			scaleObjects(btnHardmode, scale)
+			btnHardmode.x = 0;
+			btnHardmode.y = 100;
+			localGroup:insert(btnHardmode)
+			table.insert(_arButtons, btnHardmode);
+		end
 		
 		refreshSound();
 	end
@@ -135,6 +147,11 @@ function new(callRestart, callMenu)
 						return true;
 					elseif(item_mc.act == "btnRetry")then
 						soundPlay("click_approve");
+						callRestart();
+						return true;
+					elseif(item_mc.act == "btnHardmode")then
+						soundPlay("click_approve");
+						_G.currentLevel = 2
 						callRestart();
 						return true;
 					elseif(item_mc.act == "btnMenu")then

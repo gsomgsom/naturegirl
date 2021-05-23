@@ -13,6 +13,10 @@ options_controls = "touch" -- touch, cursor, console
 optionsMobile = (optionsBuild == "ios" or optionsBuild == "android")
 options_save_fname = "dataUser"
 
+currentLevel = 1
+firstLevelPassed = false
+gameOverVictory = false
+
 -- groups
 mainGroup = display.newGroup()
 cursorGroup = display.newGroup()
@@ -143,9 +147,9 @@ function loadData()
 end
 
 function loadLevels()
-	-- @TODO - больше 1 уровня - потом
 	levels = {
-		[ 1 ] = require("data.level")
+		[ 1 ] = require("data.levelEasy"),
+		[ 2 ] = require("data.levelHard"),
 	}
 end
 
@@ -253,6 +257,13 @@ function showGame()
 		director:changeScene('src.ScreenGame')
 	end)
 end
+
+function showTutorial()
+	show_fade_gfx(function()
+		director:changeScene('src.ScreenTutorial')
+	end)
+end
+
 
 -- methods
 function addButton(title, tx, ty, fname, onRelease, tfSize, tfColor, ico)

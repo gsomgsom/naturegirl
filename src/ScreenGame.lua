@@ -7,18 +7,19 @@ function new()
 	local faceGroup = display.newGroup()
 
 	local HP = 5
-	local SCORE = 5
+	local SCORE = 0
 	local TIME_SPEED_MAX = 3000
 	local SPEED_MULTIPLIER = 20
 	local CELL_DIVIDER = 5
 	local MAX_PLANTS = 6
 	local BOSS_LIGHTING_TIMER = 3000
+	local BOSS_LIGHTING_DELAY = 2000
 	local PLANT_ATTACK_TIMER = 1000
 	local BOSS_HP = 20
 
 	local gameMode = "normal"
 	local cellHeight = ( _W / CELL_DIVIDER ) * 0.5
-	local maxGameGroupY = cellHeight * #levels[ 1 ].data + _H
+	local maxGameGroupY = cellHeight * #levels[ currentLevel ].data + _H
 	-- maxGameGroupY = 2000 -- DEBUG BOSS FIGHT
 	
 	local _drops = {}
@@ -70,12 +71,13 @@ function new()
 	rect:setFillColor(0,0,0)
 	backGroup:insert(rect)
 	
---[[
-	local tfTitle = createText("", 80*scaleGraphics, {1,1,1})
-	tfTitle.x = _W/2
-	tfTitle.y = 400*scaleGraphics
-	faceGroup:insert(tfTitle)
-]]--
+	local tfHintBeforeBoss = createText("Вы нашли 20\nсемян и\n100 воды!", 80*scaleGraphics, {0,0,0})
+	tfHintBeforeBoss.x = _W/2
+	tfHintBeforeBoss.y = _H/2
+	faceGroup:insert(tfHintBeforeBoss)
+	tfHintBeforeBoss.isVisible = false
+
+	local tfHintPlant = nil
 	
 	local bgHP1 = addObj("hpBG")
 	bgHP1.xScale = scaleGraphics
@@ -303,6 +305,7 @@ function new()
 			tfBossHP.isVisible = true
 			if _plantsLeft > 0 then
 				btnGrow.isVisible = true
+				tfHintPlant.isVisible = true
 			end
 			for i = 2, gameGroup.numChildren do
 				gameGroup[ i ].isVisible = false
@@ -314,7 +317,11 @@ function new()
 			_boss:play()
 			_character:setSequence( "idle" )
 			_character:play()
-
+		
+			tfHintBeforeBoss.isVisible = true
+			timer.performWithDelay( 5000, function()
+				tfHintBeforeBoss.isVisible = false
+			end, 1 )
 			timer.performWithDelay( 2000, function()
 				if _boss ~= nil then
 					_boss:setSequence( "idle" )
@@ -520,11 +527,11 @@ function new()
 	end
 
 	function createLevelObjects()
-		local rowCount = #levels[ 1 ].data
+		local rowCount = #levels[ currentLevel ].data
 
 		for r = 1, rowCount do
 			for c = 1, CELL_DIVIDER do
-				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 1 then
+				if levels[ currentLevel ].data[ rowCount - r + 1 ][ c ] == 1 then
 					local drop = addObj( "drop" )
 					drop.xScale = 0.5*scaleGraphics
 					drop.yScale = 0.5*scaleGraphics
@@ -535,7 +542,7 @@ function new()
 					gameGroup:insert( drop )
 					table.insert(_drops, gameGroup.numChildren)
 				end
-				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 2 then
+				if levels[ currentLevel ].data[ rowCount - r + 1 ][ c ] == 2 then
 					local stone = addObj( "smallStones" )
 					stone.xScale = 1.2*scaleGraphics
 					stone.yScale = 1.2*scaleGraphics
@@ -546,7 +553,7 @@ function new()
 					gameGroup:insert( stone )
 					table.insert(_blocks, gameGroup.numChildren)
 				end
-				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 3 then
+				if levels[ currentLevel ].data[ rowCount - r + 1 ][ c ] == 3 then
 					local bones = addObj( "skull" )
 					bones.xScale = 1*scaleGraphics
 					bones.yScale = 1*scaleGraphics
@@ -557,7 +564,7 @@ function new()
 					gameGroup:insert( bones )
 					table.insert(_blocks, gameGroup.numChildren)
 				end
-				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 4 then
+				if levels[ currentLevel ].data[ rowCount - r + 1 ][ c ] == 4 then
 					local seedOrange = addObj( "seedOrange" )
 					seedOrange.xScale = 0.2*scaleGraphics
 					seedOrange.yScale = 0.2*scaleGraphics
@@ -568,7 +575,7 @@ function new()
 					gameGroup:insert( seedOrange )
 					table.insert(_seedsOrangeObj, gameGroup.numChildren)
 				end
-				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 5 then
+				if levels[ currentLevel ].data[ rowCount - r + 1 ][ c ] == 5 then
 					local seedGreen = addObj( "seedGreen" )
 					seedGreen.xScale = 0.2*scaleGraphics
 					seedGreen.yScale = 0.2*scaleGraphics
@@ -579,7 +586,7 @@ function new()
 					gameGroup:insert( seedGreen )
 					table.insert(_seedsGreenObj, gameGroup.numChildren)
 				end
-				if levels[ 1 ].data[ rowCount - r + 1 ][ c ] == 6 then
+				if levels[ currentLevel ].data[ rowCount - r + 1 ][ c ] == 6 then
 					local trap = addObj( "trap" )
 					trap.xScale = 1.1*scaleGraphics
 					trap.yScale = 1.1*scaleGraphics
@@ -648,6 +655,7 @@ function new()
 	end
 
 	local function createCharacter()
+		print('create char')
 		local girlTexture = require( "images.sprites.girl" )
 		local girlSheet = graphics.newImageSheet( "images/sprites/girl.png", girlTexture:getSheet() )
 		_character = display.newSprite( girlSheet, {
@@ -717,6 +725,12 @@ function new()
 		localGroup:insert(btnGrow)
 		table.insert(_arButtons, btnGrow)
 		btnGrow.isVisible = false
+
+		tfHintPlant = createText("Вырастить растение!", 80*scaleGraphics, {0,0,0})
+		tfHintPlant.x = _W/2 + 100 * scaleGraphics
+		tfHintPlant.y = _H - btnGrow.h/2 - 25*scaleGraphics
+		faceGroup:insert(tfHintPlant)
+		tfHintPlant.isVisible = false
 	end
 	
 	local function refreshCharacter()
@@ -725,6 +739,11 @@ function new()
 	end
 	
 	local function init()
+		_G.gameOverVictory = false
+		if currentLevel == 2 then
+			BOSS_LIGHTING_TIMER = 2000
+			BOSS_LIGHTING_DELAY = 500
+		end
 		_gameObj["countTorch"] = 0
 		_gameObj["countSaw"] = 0
 		_gameObj["countWall"] = 0
@@ -759,6 +778,7 @@ function new()
 		bgBossPlank.isVisible = false
 		bgBossHP.isVisible = false
 		tfBossHP.isVisible = false
+		tfHintBeforeBoss.isVisible = false
 	end
 	
 	init()
@@ -769,6 +789,7 @@ function new()
 		end
 		
 		-- print(greenInspect.inspect(event))
+--[[
 		if (event.x < _character.x) then
 			_character.xMov = - _character.speed
 			_character.move = true
@@ -778,6 +799,8 @@ function new()
 			_character.move = true
 			print('right')
 		end
+]]--
+		_character.x = event.x
 		_pointX = event.x
 	end
 	
@@ -1030,6 +1053,7 @@ function new()
 	-- very fake seeds grow
 	local function spawnPlant()
 		if gameMode == "bossFight" and _plantsLeft > 0 then
+			tfHintPlant.isVisible = false
 			_plantsLeft = _plantsLeft - 1
 			if math.random(0, 100) > 50 then
 				updateScore( _score - 5 )
@@ -1052,7 +1076,7 @@ function new()
 						fx.screenFlash( { 0, 0, 1 } )
 						soundPlay( "electric_trap" )
 						_lightning = createLightning()
-						transition.to( _lightning, { time = 2000, y = _H, onComplete = function( obj )
+						transition.to( _lightning, { time = BOSS_LIGHTING_DELAY, y = _H, onComplete = function( obj )
 							_hit_by_lightning = true
 							obj:removeSelf()
 						end } )
@@ -1069,6 +1093,8 @@ function new()
 							updateBossHP( _bossHP - 1 )
 							if _bossHP <= 0 then
 								soundPlay("victory")
+								_G.gameOverVictory = true
+								_G.firstLevelPassed = true
 								gameOver()
 								showGameOver()
 							end
@@ -1131,6 +1157,7 @@ function new()
 		if(phase=='began')then
 			checkButtons(event)
 		elseif(phase=='moved')then
+			touchCharacter(event)
 			checkButtons(event)
 		else
 			for i=1,#_arButtons do
@@ -1163,7 +1190,7 @@ function new()
 				end
 			end
 			
-			touchCharacter(event)
+			--touchCharacter(event)
 		end
 	end
 	

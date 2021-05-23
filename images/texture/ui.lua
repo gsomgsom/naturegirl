@@ -1,7 +1,7 @@
 --
 -- created with TexturePacker - https://www.codeandweb.com/texturepacker
 --
--- $TexturePacker:SmartUpdate:116ba64f30f61fa3e58a69dae740fc86:c0bdaa8d19b8733c371ae815b9b53eed:2f9aa7ed53d9dd429372ba2a00184b66$
+-- $TexturePacker:SmartUpdate:774f139814823373636fa408004ee7d2:4edc9ccc5e3b5534aecd3c20bfbb8104:2f9aa7ed53d9dd429372ba2a00184b66$
 --
 -- local sheetInfo = require("mysheet")
 -- local myImageSheet = graphics.newImageSheet( "mysheet.png", sheetInfo:getSheet() )
@@ -16,7 +16,7 @@ SheetInfo.sheet =
     
         {
             -- btnAd
-            x=910,
+            x=1109,
             y=303,
             width=300,
             height=300,
@@ -24,24 +24,32 @@ SheetInfo.sheet =
         },
         {
             -- btnExit
-            x=1,
-            y=503,
+            x=803,
+            y=1,
             width=301,
             height=300,
 
         },
         {
             -- btnGrow
-            x=910,
+            x=1109,
             y=605,
             width=300,
             height=300,
 
         },
         {
+            -- btnHardmode
+            x=1,
+            y=1,
+            width=800,
+            height=300,
+
+        },
+        {
             -- btnMenu
-            x=304,
-            y=503,
+            x=503,
+            y=303,
             width=301,
             height=300,
 
@@ -49,7 +57,7 @@ SheetInfo.sheet =
         {
             -- btnPause
             x=503,
-            y=1,
+            y=605,
             width=301,
             height=300,
 
@@ -57,14 +65,14 @@ SheetInfo.sheet =
         {
             -- btnPlay
             x=1,
-            y=1,
+            y=303,
             width=500,
             height=500,
 
         },
         {
             -- btnRetry
-            x=806,
+            x=1106,
             y=1,
             width=301,
             height=300,
@@ -72,7 +80,7 @@ SheetInfo.sheet =
         },
         {
             -- btnSound
-            x=607,
+            x=806,
             y=303,
             width=301,
             height=300,
@@ -80,7 +88,7 @@ SheetInfo.sheet =
         },
         {
             -- btnSoundOff
-            x=607,
+            x=806,
             y=605,
             width=301,
             height=300,
@@ -88,7 +96,7 @@ SheetInfo.sheet =
         },
     },
 
-    sheetContentWidth = 1211,
+    sheetContentWidth = 1410,
     sheetContentHeight = 906
 }
 
@@ -98,12 +106,13 @@ SheetInfo.frameIndex =
     ["btnAd"] = 1,
     ["btnExit"] = 2,
     ["btnGrow"] = 3,
-    ["btnMenu"] = 4,
-    ["btnPause"] = 5,
-    ["btnPlay"] = 6,
-    ["btnRetry"] = 7,
-    ["btnSound"] = 8,
-    ["btnSoundOff"] = 9,
+    ["btnHardmode"] = 4,
+    ["btnMenu"] = 5,
+    ["btnPause"] = 6,
+    ["btnPlay"] = 7,
+    ["btnRetry"] = 8,
+    ["btnSound"] = 9,
+    ["btnSoundOff"] = 10,
 }
 
 function SheetInfo:getSheet()

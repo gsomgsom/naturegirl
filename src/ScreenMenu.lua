@@ -30,7 +30,7 @@ function new()
 ]]--
 	
 	local btnStart = addButtonTexture("btnPlay");
-	scaleObjects(btnStart, 0.6*scaleGraphics);
+	scaleObjects(btnStart, 0.5*scaleGraphics);
 	btnStart.x = _W/2;
 	btnStart.y = _H - 180*scaleGraphics
 	faceGroup:insert(btnStart)
@@ -137,7 +137,7 @@ function new()
 						return true;
 					elseif(item_mc.act == "btnPlay")then
 						soundPlay("click_approve");
-						showGame();
+						showTutorial();
 						return true;
 					elseif(item_mc.act == "btnSound" or item_mc.act == "btnSoundOff")then
 						soundPlay("click_approve");
